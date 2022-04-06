@@ -1,9 +1,9 @@
 <template>
-    <div className="user-list block">
-        <div className="container">
-            <div className="user-list__content content">
-                <div className="user-list__title title" v-on:click="seen = !seen" >User list</div>
-                <div v-if="seen" className="user-list__list">
+    <div class="user-list block">
+        <div class="container">
+            <div class="user-list__content content">
+                <div class="user-list__title title" v-on:click="seen = !seen" >User list</div>
+                <div v-if="seen" class="user-list__list">
                    <ListItem v-for="el in arr" v-bind:key="el" v-bind:item="el"/>
                 </div>
             </div>
@@ -14,7 +14,7 @@
 <script>
     import ListItem from './ListItem.vue'
     export default {
-        name: 'App',
+        name: 'UserList',
         data () {
             return {
                 arr: [],
