@@ -1,22 +1,15 @@
 <template>
     <div className="to-do-list__item">
-        <div className="to-do-list__data">{{item.content}}</div>
-        <div className="to-do-list__delete" v-on:click="deleteIssue(item.id)">X</div>
+        <div className="to-do-list__data">{{item}}</div>
+        <div className="to-do-list__delete" @click="$emit('deleteIssue')">X</div>
     </div>
 </template>
 
 <script>
     export default {
         name: 'ListItem',
-        props: {
-            item: { type: Object },
-            deleteIssue: { type: Function }
-        },
-        methods: {
-            showId (id) {
-                console.log(id)
-            }
-        }
+        props: ['item'],
+        emits: ['deleteIssue']
     }
 </script>
 

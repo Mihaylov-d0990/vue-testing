@@ -2,10 +2,10 @@
     <div class="to-do-list block">
         <div class="container">
             <div class="to-do-list__content content">
-                <div class="to-do-list__title title" v-on:click="seen = !seen">To do list</div>
+                <div class="to-do-list__title title" @click="seen = !seen">To do list</div>
                 <ListControl :addNewIssue="addNewIssue" v-if="seen" />
                 <div className="to-do-list__list" v-if="seen">
-                    <ListItem v-for="el in arr" v-bind:key="el" v-bind:item="el" :deleteIssue="deleteIssue"/>
+                    <ListItem v-for="(el, index) in arr" :key="el.id" :item="el.content" @deleteIssue="arr.splice(index, 1)"/>
                 </div>
             </div>
         </div>
@@ -48,10 +48,6 @@
                         content: text
                     })
                 }
-            },
-            deleteIssue (id) {
-                const newArr = this.arr ? this.arr.filter(issue => issue.id !== id) : this.arr
-                this.arr = newArr
             }
         },
         components: {

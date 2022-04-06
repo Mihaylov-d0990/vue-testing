@@ -2,7 +2,7 @@
     <div className="to-do-list__control">
         <div className="to-do-list__new-item">
             <input className="to-do-list__new-item-input" type="text" v-model="this.text" />
-            <button className="to-do-list__new-item-add" v-on:click="addNewIssue(text)">Add new issue</button>
+            <button className="to-do-list__new-item-add" @click="addNewIssue(text)">Add new issue</button>
         </div>
     </div>
 </template>

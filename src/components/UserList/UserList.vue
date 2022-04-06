@@ -2,9 +2,9 @@
     <div class="user-list block">
         <div class="container">
             <div class="user-list__content content">
-                <div class="user-list__title title" v-on:click="seen = !seen" >User list</div>
+                <div class="user-list__title title" @click="seen = !seen" >User list</div>
                 <div v-if="seen" class="user-list__list">
-                   <ListItem v-for="el in arr" v-bind:key="el" v-bind:item="el"/>
+                   <ListItem v-for="el in arr" :key="el.id" :item="el"/>
                 </div>
             </div>
         </div>
