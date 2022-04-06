@@ -46,6 +46,7 @@
         font-size: 1em;
         cursor: pointer;
         transition: 0.3s;
+        user-select: none;
     }
 
     .to-do-list__new-item-add:hover {

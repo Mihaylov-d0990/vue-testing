@@ -27,5 +27,6 @@
         color: #c90606;
         cursor: pointer;
         font-weight: 600;
+        user-select: none;
     }
 </style>
