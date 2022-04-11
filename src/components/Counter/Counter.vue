@@ -15,7 +15,7 @@
 
 <script>
     export default {
-        name: 'CounterComponent',
+        name: 'counter-component',
         data () {
             return {
                 count: 0,

@@ -19,7 +19,7 @@
 
 <script>
     export default {
-        name: 'ListItem',
+        name: 'list-item',
         props: ['item']
     }
 </script>

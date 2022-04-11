@@ -4,7 +4,7 @@
             <div class="user-list__content content">
                 <div class="user-list__title title" @click="seen = !seen" >User list</div>
                 <div v-if="seen" class="user-list__list">
-                   <ListItem v-for="el in arr" :key="el.id" :item="el"/>
+                   <list-item v-for="el in arr" :key="el.id" :item="el"/>
                 </div>
             </div>
         </div>
@@ -12,9 +12,9 @@
 </template>
 
 <script>
-    import ListItem from './ListItem.vue'
+    import ListItem from './ListItem'
     export default {
-        name: 'UserList',
+        name: 'user-list',
         data () {
             return {
                 arr: [],

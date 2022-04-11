@@ -3,9 +3,9 @@
         <div class="container">
             <div class="to-do-list__content content">
                 <div class="to-do-list__title title" @click="seen = !seen">To do list</div>
-                <ListControl :addNewIssue="addNewIssue" v-if="seen" />
+                <list-control :addNewIssue="addNewIssue" v-if="seen" />
                 <div className="to-do-list__list" v-if="seen">
-                    <ListItem v-for="(el, index) in arr" :key="el.id" :item="el.content" @deleteIssue="arr.splice(index, 1)"/>
+                    <list-item v-for="(el, index) in arr" :key="el.id" :item="el.content" @deleteIssue="arr.splice(index, 1)"/>
                 </div>
             </div>
         </div>
@@ -13,10 +13,10 @@
 </template>
 
 <script>
-    import ListItem from './ListItem.vue'
-    import ListControl from './ListControl.vue'
+    import ListItem from './ListItem'
+    import ListControl from './ListControl'
     export default {
-        name: 'ToDoList',
+        name: 'to-do-list',
         data () {
             return {
                 arr: [
@@ -50,10 +50,7 @@
                 }
             }
         },
-        components: {
-            ListItem,
-            ListControl
-        }
+        components: { ListItem, ListControl }
     }
 </script>
 

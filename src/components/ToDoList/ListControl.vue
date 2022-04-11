@@ -9,7 +9,7 @@
 
 <script>
     export default {
-        name: 'ListControl',
+        name: 'list-control',
         props: {
             addNewIssue: { type: Function }
         },
