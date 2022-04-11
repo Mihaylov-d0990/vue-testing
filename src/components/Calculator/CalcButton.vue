@@ -18,4 +18,8 @@ export default {
         cursor: pointer;
         transition: 0.3s;
     }
+
+    .calculator__button:hover {
+        background-color: #ebe9e9;
+    }
 </style>

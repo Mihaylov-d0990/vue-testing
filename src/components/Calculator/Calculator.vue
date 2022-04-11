@@ -4,7 +4,7 @@
             <div class="calculator__content content">
                 <div class="calculator__title title" @click="seen = !seen">Calculator</div>
                 <div class="calculator__form" v-if="seen">
-                    <input type="text" class="calculator__input" />
+                    <calc-input />
                     <div class="calculator__buttons">
                         <calc-button v-for="value in buttons" >{{value}}</calc-button>
                     </div>
@@ -16,6 +16,7 @@
 
 <script>
 import CalcButton from "./CalcButton"
+import CalcInput from "./CalcInput"
 export default {
     name: 'calculator-component',
     data () {
@@ -27,13 +28,11 @@ export default {
                 "←", "0", "=", "/"]
         }
     },
-    components: {
-        CalcButton
-    }
+    components: { CalcButton, CalcInput }
 }
 </script>
 
-<style>
+<style scoped>
     .calculator__form {
         border: 1px solid #dddddd;
         background-color: #f7f7f7;
@@ -44,5 +43,12 @@ export default {
         align-items: flex-start;
         align-self: flex-start;
         row-gap: 3px;
+    }
+
+    .calculator__buttons {
+        display: grid;
+        grid-template-columns: repeat(4, 35px);
+        grid-template-rows: repeat(4, 35px);
+        grid-gap: 3px;
     }
 </style>
