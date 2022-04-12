@@ -5,12 +5,13 @@
                 <div class="tictactoe__title title" @click="seen = !seen">TicTacToe</div>
                 <div class="tictactoe__form" v-if="seen">
                     <div class="tictactoe__fields">
-                        <div
-                            class="tictactoe__field"
+                        <tictactoe-field
                             v-for="field in fields"
                             :key="field.id"
                             @click="move(field.id)"
-                        >{{field.value}}</div>
+                        >
+                            {{field.value}}
+                        </tictactoe-field>
                     </div>
                 </div>
             </div>
@@ -19,10 +20,11 @@
 </template>
 
 <script>
+import TictactoeField from "./Field"
 
 const EMPTY_FIELD = ""
-const CROSS_FIELD = "X"
-const ZERO_FIELD = "O"
+const CROSS_FIELD = "✕"
+const ZERO_FIELD = "◯"
 
 export default {
     name: 'tictactoe-component',
@@ -51,7 +53,8 @@ export default {
                 }
             })
         }
-    }
+    },
+    components: { TictactoeField }
 }
 </script>
 
@@ -60,18 +63,19 @@ export default {
         display: grid;
         grid-template-columns: repeat(3, 50px);
         grid-template-rows: repeat(3, 50px);
-        grid-gap: 3px;
+        grid-gap: 3px;        
     }
 
     .tictactoe__field {
+        font-size: 1.5em;
         border: 1px solid #dddddd;
         background-color: #f7f7f7;
         padding: 5px;
         border-radius: 5px;
-        text-align: center;
-        vertical-align: middle;
+        display: flex;
+        justify-content: center;
+        align-items: center;
         cursor: pointer;
     }
-
 
 </style>
