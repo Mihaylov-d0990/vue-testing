@@ -8,6 +8,7 @@
     "lint": "vue-cli-service lint"
   },
   "dependencies": {
+    "calculate-string": "^2.0.2",
     "core-js": "^3.8.3",
     "eslint": "^8.13.0",
     "node-sass": "^7.0.1",

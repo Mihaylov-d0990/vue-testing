@@ -10,11 +10,13 @@
                     />
                     <div class="calculator__buttons">
                         <calc-button
-                            v-for="value in buttons"
-                            :key="value"
-                            :text="value"
-                            @click="addValue(value)"
+                            v-for="item in buttons"
+                            :key="item"
+                            :text="item"
+                            @click="addValue(item)"
                         />
+                        <calc-button :text="'='" @click="calc" />
+                        <calc-button :text="'←'" />
                     </div>
                 </div>
             </div>
@@ -25,6 +27,7 @@
 <script>
 import CalcButton from "./CalcButton"
 import CalcInput from "./CalcInput"
+const calculateString = require('calculate-string')
 export default {
     name: 'calculator-component',
     data () {
@@ -33,7 +36,7 @@ export default {
             buttons: ["1", "2", "3", "+", 
                 "4", "5", "6", "-", 
                 "7", "8", "9", "*",
-                "←", "0", "=", "/"],
+                "0", "/"],
             inputValue: ""
         }
     },
@@ -43,12 +46,16 @@ export default {
         },
         addValue(value) {
             this.inputValue += value
+        },
+        calc() {
+            this.inputValue = calculateString(this.inputValue)
         }
     },
     components: { CalcButton, CalcInput }
 }
 </script>
 
+        CalcButton
 <style scoped>
     .calculator__form {
         border: 1px solid #dddddd;
