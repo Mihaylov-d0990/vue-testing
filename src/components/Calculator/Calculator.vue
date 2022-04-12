@@ -16,7 +16,8 @@
                             @click="addValue(item)"
                         />
                         <calc-button :text="'='" @click="calc" />
-                        <calc-button :text="'←'" />
+                        <calc-button :text="'←'" @click="this.inputValue = this.inputValue.substring(0, this.inputValue.length - 1)" />
+                        <calc-button :text="'C'" @click="this.inputValue = ''"/>
                     </div>
                 </div>
             </div>
@@ -36,7 +37,7 @@ export default {
             buttons: ["1", "2", "3", "+", 
                 "4", "5", "6", "-", 
                 "7", "8", "9", "*",
-                "0", "/"],
+                ".", "0", "/", "(", ")"],
             inputValue: ""
         }
     },
@@ -72,7 +73,7 @@ export default {
     .calculator__buttons {
         display: grid;
         grid-template-columns: repeat(4, 35px);
-        grid-template-rows: repeat(4, 35px);
+        grid-template-rows: repeat(5, 35px);
         grid-gap: 3px;
     }
 </style>
