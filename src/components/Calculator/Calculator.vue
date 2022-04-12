@@ -33,7 +33,7 @@ export default {
     name: 'calculator-component',
     data () {
         return {
-            seen: true,
+            seen: false,
             buttons: ["1", "2", "3", "+", 
                 "4", "5", "6", "-", 
                 "7", "8", "9", "*",
