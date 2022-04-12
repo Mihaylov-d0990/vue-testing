@@ -4,9 +4,17 @@
             <div class="calculator__content content">
                 <div class="calculator__title title" @click="seen = !seen">Calculator</div>
                 <div class="calculator__form" v-if="seen">
-                    <calc-input />
+                    <calc-input 
+                        @input-handler="inputHandler" 
+                        :modelValue="inputValue" 
+                    />
                     <div class="calculator__buttons">
-                        <calc-button v-for="value in buttons" >{{value}}</calc-button>
+                        <calc-button
+                            v-for="value in buttons"
+                            :key="value"
+                            :text="value"
+                            @click="addValue(value)"
+                        />
                     </div>
                 </div>
             </div>
@@ -25,7 +33,16 @@ export default {
             buttons: ["1", "2", "3", "+", 
                 "4", "5", "6", "-", 
                 "7", "8", "9", "*",
-                "←", "0", "=", "/"]
+                "←", "0", "=", "/"],
+            inputValue: ""
+        }
+    },
+    methods: {
+        inputHandler(event) {
+            this.inputValue = event.target.value
+        },
+        addValue(value) {
+            this.inputValue += value
         }
     },
     components: { CalcButton, CalcInput }

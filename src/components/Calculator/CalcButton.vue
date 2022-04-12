@@ -1,12 +1,18 @@
 <template>
     <button class="calculator__button">
-        <slot></slot>
+        {{text}}
     </button>
 </template>
 
 <script>
 export default {
-    name: 'calc-button'
+    name: 'calc-button',
+    props: {
+        text: {
+            type: String,
+            required: true
+        }
+    }
 }
 </script>
 

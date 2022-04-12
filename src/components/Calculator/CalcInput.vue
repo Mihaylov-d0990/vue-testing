@@ -1,10 +1,16 @@
 <template>
-    <input type="text" class="calculator__input" />
+    <input type="text" class="calculator__input" :value="modelValue" @input="$emit('inputHandler', $event)" />
 </template>
 
 <script>
 export default {
-    name: 'calc-input'
+    name: 'calc-input',
+    props: {
+        modelValue: {
+            type: String,
+            required: true
+        }
+    }
 }
 </script>
 
