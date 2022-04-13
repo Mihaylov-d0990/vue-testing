@@ -1,9 +1,9 @@
 <template>
-    <div class="tictactoe__field">
+    <button class="tictactoe__field">
         <p>
             <slot></slot>
         </p>
-    </div>
+    </button>
 </template>
 
 <script>

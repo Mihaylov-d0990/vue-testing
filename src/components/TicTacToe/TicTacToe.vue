@@ -4,11 +4,21 @@
             <div class="tictactoe__content content">
                 <div class="tictactoe__title title" @click="seen = !seen">TicTacToe</div>
                 <div class="tictactoe__form" v-if="seen">
+                    <div class="tictactoe__control">
+                        <button
+                            @click="control"
+                            :disabled="this.controlDisabled"
+                        >{{this.disabled ? "Start" : "Stop"}}</button>
+                        <button
+                            @click="reset"
+                        >Reset</button>
+                    </div>
                     <div class="tictactoe__fields">
                         <tictactoe-field
                             v-for="field in fields"
                             :key="field.id"
                             @click="move(field.id)"
+                            :disabled="this.disabled"
                         >
                             {{field.value}}
                         </tictactoe-field>
@@ -74,22 +84,26 @@ const getWinner = (fieldsArray) => {
     return player
 }
 
+const resetFields = () => {
+    const fieldsArray = []
+    for (let i = 0; i < 9; i++) {
+        fieldsArray.push({
+            id: i,
+            value: EMPTY_FIELD
+        })
+    }
+    return fieldsArray
+}
+
 export default {
     name: 'tictactoe-component',
     data () {
         return {
             seen: true,
             turn: true,
-            fields: (() => {
-                const fieldsArray = []
-                for (let i = 0; i < 9; i++) {
-                    fieldsArray.push({
-                        id: i,
-                        value: EMPTY_FIELD
-                    })
-                }
-                return fieldsArray
-            })()
+            disabled: true,
+            controlDisabled: false,
+            fields: resetFields()
         }
     },
     methods: {
@@ -100,7 +114,16 @@ export default {
                     this.turn = !this.turn
                 }
             })
-            console.log(getWinner(this.fields))
+            if (getWinner(this.fields)) {
+                this.disabled = !this.disabled
+                this.controlDisabled = true
+            }
+        },
+        control() { this.disabled = !this.disabled },
+        reset() {
+            this.turn = true
+            this.controlDisabled = false
+            this.fields = resetFields()
         }
     },
     components: { TictactoeField }
@@ -108,6 +131,32 @@ export default {
 </script>
 
 <style scoped>
+    .tictactoe__form {
+        display: flex;
+        flex-direction: column;
+        row-gap: 3px;
+    }
+
+    .tictactoe__control {
+        width: calc((50px * 3) + (3px * 2));
+        display: flex;
+        column-gap: 3px;
+    }
+
+    .tictactoe__control button {
+        flex: 1 1 50%;
+        border: 1px solid #dddddd;
+        background-color: #f7f7f7;
+        padding: 5px;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .tictactoe__control button:hover {
+        background-color: #ebe9e9;
+    }
+
     .tictactoe__fields {
         display: grid;
         grid-template-columns: repeat(3, 50px);
