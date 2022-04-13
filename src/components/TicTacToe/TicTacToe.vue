@@ -26,6 +26,54 @@ const EMPTY_FIELD = ""
 const CROSS_FIELD = "✕"
 const ZERO_FIELD = "◯"
 
+const getWinner = (fieldsArray) => {
+    let player = EMPTY_FIELD
+
+    for (let i = 0; i < 3; i++) {
+        if (player !== EMPTY_FIELD) return player
+        for (let j = i * 3; j < (i + 1) * 3; j++) {
+            if ((j === i * 3) && (fieldsArray[i * 3].value !== EMPTY_FIELD)) player = fieldsArray[j].value
+            if ((j === i * 3) && (fieldsArray[i * 3].value === EMPTY_FIELD)) break
+            if ((j !== i * 3) && (fieldsArray[j].value !== player)) {
+                player = EMPTY_FIELD
+                break
+            }
+        }
+    }
+
+    for (let i = 0; i < 3; i++) {
+        if (player !== EMPTY_FIELD) return player
+        for (let j = i; j < 7 + i; j += 3){
+            if ((j === i) && (fieldsArray[i].value !== EMPTY_FIELD)) player = fieldsArray[j].value
+            if ((j === i) && (fieldsArray[i].value === EMPTY_FIELD)) break
+            if ((j !== i) && (fieldsArray[j].value !== player)) {
+                player = EMPTY_FIELD
+                break
+            }
+        }
+    }
+
+    for (let i = 0; i < 9; i += 4) {
+        if ((i === 0) && (fieldsArray[0].value !== EMPTY_FIELD)) player = fieldsArray[i].value
+        if ((i === 0) && (fieldsArray[0].value === EMPTY_FIELD)) break
+        if ((i !== 0) && (fieldsArray[i].value !== player)) {
+            player = EMPTY_FIELD
+            break
+        }
+    }
+
+    for (let i = 2; i < 7; i += 2) {
+        if ((i === 2) && (fieldsArray[2].value !== EMPTY_FIELD)) player = fieldsArray[i].value
+        if ((i === 2) && (fieldsArray[2].value === EMPTY_FIELD)) break
+        if ((i !== 2) && (fieldsArray[i].value !== player)) {
+            player = EMPTY_FIELD
+            break
+        }
+    }
+
+    return player
+}
+
 export default {
     name: 'tictactoe-component',
     data () {
@@ -52,6 +100,7 @@ export default {
                     this.turn = !this.turn
                 }
             })
+            console.log(getWinner(this.fields))
         }
     },
     components: { TictactoeField }
@@ -65,17 +114,4 @@ export default {
         grid-template-rows: repeat(3, 50px);
         grid-gap: 3px;        
     }
-
-    .tictactoe__field {
-        font-size: 1.5em;
-        border: 1px solid #dddddd;
-        background-color: #f7f7f7;
-        padding: 5px;
-        border-radius: 5px;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        cursor: pointer;
-    }
-
 </style>
