@@ -6,6 +6,7 @@
                 <list-control :addNewIssue="addNewIssue" v-if="seen" />
                 <div className="to-do-list__list" v-if="seen">
                     <list-item v-for="(el, index) in arr" :key="el.id" :item="el.content" @deleteIssue="arr.splice(index, 1)"/>
+                    <div v-if="this.arr.length === 0">There is no issues</div>
                 </div>
             </div>
         </div>

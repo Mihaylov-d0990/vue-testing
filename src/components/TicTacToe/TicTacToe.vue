@@ -99,7 +99,7 @@ export default {
     name: 'tictactoe-component',
     data () {
         return {
-            seen: true,
+            seen: false,
             turn: true,
             disabled: true,
             controlDisabled: false,
@@ -123,6 +123,7 @@ export default {
         reset() {
             this.turn = true
             this.controlDisabled = false
+            this.disabled = true
             this.fields = resetFields()
         }
     },
