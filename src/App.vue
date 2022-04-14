@@ -4,6 +4,7 @@
     <to-do-list />
     <calculator-component />
     <tictactoe-component />
+    <chess-component />
 </template>
 
 <script>
@@ -12,7 +13,7 @@
     import CounterComponent from '@/components/Counter/Counter'
     import CalculatorComponent from '@/components/Calculator/Calculator'
     import TictactoeComponent from '@/components/TicTacToe/TicTacToe'
-    import TicTacToe from './components/TicTacToe/TicTacToe.vue'
+    import ChessComponent from '@/components/Chess/Chess'
 
     export default {
         name: 'App',
@@ -21,7 +22,8 @@
             ToDoList,
             CounterComponent,
             CalculatorComponent,
-            TictactoeComponent
+            TictactoeComponent,
+            ChessComponent
         }
     }
 </script>

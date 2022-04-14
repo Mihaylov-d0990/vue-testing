@@ -56,7 +56,6 @@ export default {
 }
 </script>
 
-        CalcButton
 <style scoped>
     .calculator__form {
         border: 1px solid #dddddd;
