@@ -20,7 +20,7 @@
 
 <script>
 import { createChessBoard, initializeFigures, WHITE, BLACK } from "./initialization"
-import { pawnMove } from "./movements"
+import { pawnMove, bishopMove } from "./movements"
 
 export default {
     name: 'chess-component',
@@ -40,7 +40,14 @@ export default {
     methods: {
         displayFigure(field) {
             if (!this.firstClick && field.figure) {
-                this.allowedMoves = pawnMove(field, this.fields)
+                switch(field.figure.priority) {
+                    case 1: this.allowedMoves = pawnMove(field, this.fields)
+                    break
+                    case 3: this.allowedMoves = bishopMove(field, this.fields)
+                    break
+                    default: this.allowedMoves = []
+                }
+                
                 console.log(this.allowedMoves)
                 this.firstClick = field
             } 
