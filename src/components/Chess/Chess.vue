@@ -20,6 +20,7 @@
 
 <script>
 import { createChessBoard, initializeFigures, WHITE, BLACK } from "./initialization"
+import { pawnMove } from "./movements"
 
 
 
@@ -39,7 +40,10 @@ export default {
     },
     methods: {
         displayFigure(field) {
-            if (!this.firstClick && field.figure) this.firstClick = field
+            if (!this.firstClick && field.figure) {
+                console.log(pawnMove(field, this.fields))
+                this.firstClick = field
+            } 
             else if (this.firstClick && !this.lastClick) this.lastClick = field
             if (this.firstClick && this.lastClick) {
                 this.fields[this.lastClick.id].figure = this.firstClick.figure
