@@ -20,7 +20,7 @@
 
 <script>
 import { createChessBoard, initializeFigures, WHITE, BLACK } from "./initialization"
-import { pawnMove, bishopMove, rookMove, queenMove, kingMove } from "./movements"
+import { pawnMove, bishopMove, rookMove, knightMove, queenMove, kingMove } from "./movements"
 
 export default {
     name: 'chess-component',
@@ -42,6 +42,8 @@ export default {
             if (!this.firstClick && field.figure) {
                 switch(field.figure.priority) {
                     case 1: this.allowedMoves = pawnMove(field, this.fields)
+                    break
+                    case 2: this.allowedMoves = knightMove(field, this.fields)
                     break
                     case 3: this.allowedMoves = bishopMove(field, this.fields)
                     break

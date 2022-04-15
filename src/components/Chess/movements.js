@@ -138,7 +138,37 @@ const rookMove = (field, fields) => {
     return Array.from(allowedMoves)
 }
 
+const knightMove = (field, fields) => {
+    let allowedMoves = new Set()
 
+    const MOVES = [6, 10, 15, 17]
+
+    for (let i = 0; i < 4; i++) {
+        if (field.id - MOVES[i] < 0) continue
+        if ((field.id % 8 === 0) && ((MOVES[i] === MOVES[3]) || (MOVES[i] === MOVES[1]))) continue
+        if (((field.id - 1) % 8 === 0) && (MOVES[i] === MOVES[1])) continue       
+        if (((field.id + 1) % 8 === 0) && ((MOVES[i] === MOVES[2]) || (MOVES[i] === MOVES[0]))) continue
+        if (((field.id + 2) % 8 === 0) && (MOVES[i] === MOVES[0])) continue
+        if (fields[field.id - MOVES[i]].figure) {
+            if (fields[field.id - MOVES[i]].figure.color === field.figure.color) continue
+        }
+        allowedMoves.add(field.id - MOVES[i])
+    }
+
+    for (let i = 0; i < 4; i++) {
+        if (MOVES[i] + field.id > 63) continue
+        if ((field.id % 8 === 0) && ((MOVES[i] === MOVES[0]) || (MOVES[i] === MOVES[2]))) continue
+        if (((field.id - 1) % 8 === 0) && (MOVES[i] === MOVES[0])) continue       
+        if (((field.id + 1) % 8 === 0) && ((MOVES[i] === MOVES[1]) || (MOVES[i] === MOVES[3]))) continue
+        if (((field.id + 2) % 8 === 0) && (MOVES[i] === MOVES[1])) continue
+        if (fields[field.id + MOVES[i]].figure) {
+            if (fields[field.id + MOVES[i]].figure.color === field.figure.color) continue
+        }
+        allowedMoves.add(field.id + MOVES[i])
+    }
+
+    return Array.from(allowedMoves)
+}
 
 const queenMove = (field, fields) => {
     return [...bishopMove(field, fields), ...rookMove(field, fields)]
@@ -180,4 +210,4 @@ const kingMove = (field, fields) => {
     return Array.from(allowedMoves)
 }
 
-export { pawnMove, bishopMove, rookMove, queenMove, kingMove }
+export { pawnMove, bishopMove, rookMove, knightMove, queenMove, kingMove }
