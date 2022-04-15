@@ -37,7 +37,7 @@ const pawnMove = (field, fields) => {
                 if (fields[field.id + 9].figure.color !== field.figure.color) allowedMoves.add(field.id + 9)
             }
         }
-    } else return -1
+    }
 
     return Array.from(allowedMoves)
 }
@@ -92,4 +92,50 @@ const bishopMove = (field, fields) => {
     return Array.from(allowedMoves)
 }
 
-export { pawnMove, bishopMove }
+const rookMove = (field, fields) => {
+    let allowedMoves = new Set()
+
+    for (let i = field.id; i > 0; i -= 8) {
+        if (i === field.id) continue
+        if (fields[i].figure) {
+            if (field.figure.color !== fields[i].figure.color) allowedMoves.add(i)
+            break
+        }
+        if (!fields[i].figure) allowedMoves.add(i)
+    }
+
+    for (let i = field.id; i < 64; i += 8) {
+        if (i === field.id) continue
+        if (fields[i].figure) {
+            if (field.figure.color !== fields[i].figure.color) allowedMoves.add(i)
+            break
+        }
+        if (!fields[i].figure) allowedMoves.add(i)
+    }
+
+    for (let i = field.id; ; i--) {
+        if ((i === field.id) && (i % 8 !== 0)) continue
+        else if ((i === field.id) && (i % 8 === 0)) break
+        if (fields[i].figure) {
+            if (field.figure.color !== fields[i].figure.color) allowedMoves.add(i)
+            break
+        }
+        if (!fields[i].figure) allowedMoves.add(i)
+        if (i % 8 === 0) break
+    }
+
+    for (let i = field.id; ; i++) {
+        if ((i === field.id) && ((i + 1) % 8 !== 0)) continue
+        else if ((i === field.id) && ((i + 1) % 8 === 0)) break
+        if (fields[i].figure) {
+            if (field.figure.color !== fields[i].figure.color) allowedMoves.add(i)
+            break
+        }
+        if (!fields[i].figure) allowedMoves.add(i)
+        if ((i + 1) % 8 === 0) break
+    }
+
+    return Array.from(allowedMoves)
+}
+
+export { pawnMove, bishopMove, rookMove }

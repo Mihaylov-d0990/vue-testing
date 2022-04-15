@@ -20,7 +20,7 @@
 
 <script>
 import { createChessBoard, initializeFigures, WHITE, BLACK } from "./initialization"
-import { pawnMove, bishopMove } from "./movements"
+import { pawnMove, bishopMove, rookMove } from "./movements"
 
 export default {
     name: 'chess-component',
@@ -44,6 +44,8 @@ export default {
                     case 1: this.allowedMoves = pawnMove(field, this.fields)
                     break
                     case 3: this.allowedMoves = bishopMove(field, this.fields)
+                    break
+                    case 4: this.allowedMoves = rookMove(field, this.fields)
                     break
                     default: this.allowedMoves = []
                 }
