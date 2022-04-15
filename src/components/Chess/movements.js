@@ -138,4 +138,10 @@ const rookMove = (field, fields) => {
     return Array.from(allowedMoves)
 }
 
-export { pawnMove, bishopMove, rookMove }
+
+
+const queenMove = (field, fields) => {
+    return [...bishopMove(field, fields), ...rookMove(field, fields)]
+}
+
+export { pawnMove, bishopMove, rookMove, queenMove }
