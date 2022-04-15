@@ -1,3 +1,6 @@
+const WHITE = true
+const BLACK = false
+
 const createChessBoard = () => {
     let arr = []
     for (let i = 0; i < 64; i++) {
@@ -51,6 +54,10 @@ const initializeFigures = (chessBoard) => {
         image: require('../../assets/chesses/w-6.png')
     }
 
+    for (let i = 48; i < 64; i++) {
+        chessBoard[i].figure.color = WHITE
+    }
+
     pawFill(8, 16, 'b')
 
     chessBoard[1].figure = chessBoard[6].figure = {
@@ -78,7 +85,11 @@ const initializeFigures = (chessBoard) => {
         image: require('../../assets/chesses/b-6.png')
     }
 
+    for (let i = 0; i < 16; i++) {
+        chessBoard[i].figure.color = BLACK
+    }
+
     return chessBoard
 }
 
-export { createChessBoard, initializeFigures }
+export { createChessBoard, initializeFigures, WHITE, BLACK }

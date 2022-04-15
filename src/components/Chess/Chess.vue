@@ -5,10 +5,10 @@
                 <div class="chess__title title" @click="seen = !seen">Chess</div>
                 <div class="chess__fields" v-if="seen">
                     <div
-                        :class="[field.figure ? 'chess__figure' : '', 'chess__field']"
+                        :class="['chess__figure', 'chess__field']"
                         v-for="field in fields"
                         :key="field.id"
-                        @click="displayFigure(field.figure)"
+                        @click="displayFigure(field)"
                     >
                         <img v-if="field.figure" :src="field.figure.image" alt="">
                     </div>
@@ -19,12 +19,18 @@
 </template>
 
 <script>
-import { createChessBoard, initializeFigures } from "./initialization"
+import { createChessBoard, initializeFigures, WHITE, BLACK } from "./initialization"
+
+
+
 export default {
     name: 'chess-component',
     data () {
         return {
             seen: true,
+            turn: WHITE,
+            firstClick: null,
+            lastClick: null,
             fields: createChessBoard()
         }
     },
@@ -32,8 +38,14 @@ export default {
         this.fields = initializeFigures(this.fields)
     },
     methods: {
-        displayFigure(figure) {
-            console.log(figure)
+        displayFigure(field) {
+            if (!this.firstClick && field.figure) this.firstClick = field
+            else if (this.firstClick && !this.lastClick) this.lastClick = field
+            if (this.firstClick && this.lastClick) {
+                this.fields[this.lastClick.id].figure = this.firstClick.figure
+                this.fields[this.firstClick.id].figure = null
+                this.firstClick = this.lastClick = null
+            }
         }
     }
 }
