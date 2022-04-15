@@ -39,7 +39,7 @@ const pawnMove = (field, fields) => {
         }
     } else return -1
 
-    return allowedMoves
+    return Array.from(allowedMoves)
 }
 
 export { pawnMove }

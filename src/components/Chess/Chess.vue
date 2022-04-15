@@ -5,7 +5,7 @@
                 <div class="chess__title title" @click="seen = !seen">Chess</div>
                 <div class="chess__fields" v-if="seen">
                     <div
-                        :class="['chess__figure', 'chess__field']"
+                        :class="[displayAllowedMoves(field), 'chess__figure', 'chess__field']"
                         v-for="field in fields"
                         :key="field.id"
                         @click="displayFigure(field)"
@@ -22,8 +22,6 @@
 import { createChessBoard, initializeFigures, WHITE, BLACK } from "./initialization"
 import { pawnMove } from "./movements"
 
-
-
 export default {
     name: 'chess-component',
     data () {
@@ -31,6 +29,7 @@ export default {
             seen: true,
             turn: WHITE,
             firstClick: null,
+            allowedMoves: [],
             lastClick: null,
             fields: createChessBoard()
         }
@@ -41,15 +40,22 @@ export default {
     methods: {
         displayFigure(field) {
             if (!this.firstClick && field.figure) {
-                console.log(pawnMove(field, this.fields))
+                this.allowedMoves = pawnMove(field, this.fields)
+                console.log(this.allowedMoves)
                 this.firstClick = field
             } 
             else if (this.firstClick && !this.lastClick) this.lastClick = field
             if (this.firstClick && this.lastClick) {
-                this.fields[this.lastClick.id].figure = this.firstClick.figure
-                this.fields[this.firstClick.id].figure = null
+                if (this.allowedMoves.includes(field.id)) {
+                    this.fields[this.lastClick.id].figure = this.firstClick.figure
+                    this.fields[this.firstClick.id].figure = null
+                }
+                this.allowedMoves = []
                 this.firstClick = this.lastClick = null
             }
+        },
+        displayAllowedMoves(field) {
+            return this.allowedMoves.includes(field.id) ? 'chess__field_allowed' : ''
         }
     }
 }
@@ -102,6 +108,10 @@ export default {
 
     .chess__figure {
         cursor: pointer;
+    }
+
+    .chess__field_allowed {
+        background-color: #16b465 !important;
     }
 
 </style>
