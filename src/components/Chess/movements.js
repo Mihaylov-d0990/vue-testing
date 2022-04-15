@@ -210,4 +210,17 @@ const kingMove = (field, fields) => {
     return Array.from(allowedMoves)
 }
 
-export { pawnMove, bishopMove, rookMove, knightMove, queenMove, kingMove }
+const move = (field, fields) => {
+    switch(field.figure.priority) {
+        case 1: return pawnMove(field, fields)
+        case 2: return knightMove(field, fields)
+        case 3: return bishopMove(field, fields)
+        case 4: return rookMove(field, fields)
+        case 5: return queenMove(field, fields)
+        case 6: return kingMove(field, fields)
+        default: return []
+    }
+
+}
+
+export { pawnMove, bishopMove, rookMove, knightMove, queenMove, kingMove, move }

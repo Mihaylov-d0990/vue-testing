@@ -4,14 +4,13 @@
             <div class="chess__content content">
                 <div class="chess__title title" @click="seen = !seen">Chess</div>
                 <div class="chess__fields" v-if="seen">
-                    <div
+                    <chess-field 
                         :class="[displayAllowedMoves(field), 'chess__figure', 'chess__field']"
                         v-for="field in fields"
                         :key="field.id"
+                        :field="field"
                         @click="displayFigure(field)"
-                    >
-                        <img v-if="field.figure" :src="field.figure.image" alt="">
-                    </div>
+                    />
                 </div>
             </div>
         </div>
@@ -19,8 +18,9 @@
 </template>
 
 <script>
+import ChessField from "./ChessField"
 import { createChessBoard, initializeFigures, WHITE, BLACK } from "./initialization"
-import { pawnMove, bishopMove, rookMove, knightMove, queenMove, kingMove } from "./movements"
+import { move } from "./movements"
 
 export default {
     name: 'chess-component',
@@ -40,21 +40,7 @@ export default {
     methods: {
         displayFigure(field) {
             if (!this.firstClick && field.figure) {
-                switch(field.figure.priority) {
-                    case 1: this.allowedMoves = pawnMove(field, this.fields)
-                    break
-                    case 2: this.allowedMoves = knightMove(field, this.fields)
-                    break
-                    case 3: this.allowedMoves = bishopMove(field, this.fields)
-                    break
-                    case 4: this.allowedMoves = rookMove(field, this.fields)
-                    break
-                    case 5: this.allowedMoves = queenMove(field, this.fields)
-                    break
-                    case 6: this.allowedMoves = kingMove(field, this.fields)
-                    break
-                    default: this.allowedMoves = []
-                }
+                this.allowedMoves = move(field, this.fields)
                 
                 console.log(this.allowedMoves)
                 this.firstClick = field
@@ -72,7 +58,8 @@ export default {
         displayAllowedMoves(field) {
             return this.allowedMoves.includes(field.id) ? 'chess__field_allowed' : ''
         }
-    }
+    },
+    components: { ChessField }
 }
 </script>
 
