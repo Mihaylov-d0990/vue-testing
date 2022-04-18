@@ -5,7 +5,7 @@ const pawnMove = (field, fields) => {
     
     if (field.figure.color === WHITE) {
         if (47 < field.id && field.id < 56) {
-            if (!fields[field.id - 16].figure) allowedMoves.add(field.id - 16)
+            if (!fields[field.id - 16].figure && !fields[field.id - 8].figure) allowedMoves.add(field.id - 16)
         } 
         if (field.id > 7) {
             if (!fields[field.id - 8].figure) allowedMoves.add(field.id - 8)
@@ -22,7 +22,7 @@ const pawnMove = (field, fields) => {
         }
     } else if (field.figure.color === BLACK) {
         if (7 < field.id && field.id < 16) {
-            if (!fields[field.id + 16].figure) allowedMoves.add(field.id + 16)
+            if (!fields[field.id + 16].figure && !fields[field.id + 8].figure) allowedMoves.add(field.id + 16)
         } 
         if (field.id < 56) {
             if (!fields[field.id + 8].figure) allowedMoves.add(field.id + 8)
@@ -210,17 +210,60 @@ const kingMove = (field, fields) => {
     return Array.from(allowedMoves)
 }
 
-const move = (field, fields) => {
-    switch(field.figure.priority) {
-        case 1: return pawnMove(field, fields)
-        case 2: return knightMove(field, fields)
-        case 3: return bishopMove(field, fields)
-        case 4: return rookMove(field, fields)
-        case 5: return queenMove(field, fields)
-        case 6: return kingMove(field, fields)
-        default: return []
-    }
+// const filterMoves = (allowedMoves, fields, color) => {
+//     let kingIndex = -1
+//     fields.forEach(f => {
+//         if (f.figure) {
+//             if ((f.figure.color !== field.figure.color) && (f.figure.priority === 6)) {
+//                 kingIndex = f.id
+//             }
+//         }
+//     })
+//     return allowedMoves.filter(move => move !== kingIndex)
+// }
 
+const findKing = (fields, color) => {
+    let kingIndex = -1
+    fields.forEach(field => {
+        if (field.figure) {
+            if ((field.figure.color === color) && (field.figure.priority === 6)) kingIndex = field.id
+        }
+    })
+    return kingIndex
 }
 
-export { pawnMove, bishopMove, rookMove, knightMove, queenMove, kingMove, move }
+const getCheck = (fields, color) => {
+    let allMoves = new Set()
+    fields.forEach(field => {
+        if (field.figure) {
+            if (field.figure.color !== color) {
+                move(field, fields).forEach(id => allMoves.add(id))
+            }
+        }
+    })
+    return allMoves.has(findKing(fields, color)) ? findKing(fields, color) : -1 
+}
+
+const move = (field, fields) => {
+    let moves = []
+
+    switch(field.figure.priority) {
+        case 1: moves = pawnMove(field, fields)
+            break
+        case 2: moves = knightMove(field, fields)
+            break
+        case 3: moves = bishopMove(field, fields)
+            break
+        case 4: moves = rookMove(field, fields)
+            break
+        case 5: moves = queenMove(field, fields)
+            break
+        case 6: moves = kingMove(field, fields)
+            break
+        default: moves = []
+    }
+
+    return moves
+}
+
+export { pawnMove, bishopMove, rookMove, knightMove, queenMove, kingMove, move, getCheck }

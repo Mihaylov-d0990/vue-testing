@@ -5,7 +5,7 @@
                 <div class="chess__title title" @click="seen = !seen">Chess</div>
                 <div class="chess__fields" v-if="seen">
                     <chess-field 
-                        :class="[displayAllowedMoves(field), 'chess__figure', 'chess__field']"
+                        :class="[...displayAllowedMoves(field), 'chess__figure', 'chess__field']"
                         v-for="field in fields"
                         :key="field.id"
                         :field="field"
@@ -20,7 +20,7 @@
 <script>
 import ChessField from "./ChessField"
 import { createChessBoard, initializeFigures, WHITE, BLACK } from "./initialization"
-import { move } from "./movements"
+import { move, getCheck } from "./movements"
 
 export default {
     name: 'chess-component',
@@ -28,6 +28,7 @@ export default {
         return {
             seen: true,
             turn: WHITE,
+            check: -1,
             firstClick: null,
             allowedMoves: [],
             lastClick: null,
@@ -40,23 +41,28 @@ export default {
     methods: {
         displayFigure(field) {
             if (!this.firstClick && field.figure) {
-                this.allowedMoves = move(field, this.fields)
-                
-                console.log(this.allowedMoves)
-                this.firstClick = field
+                if (this.turn === field.figure.color) {
+                    this.allowedMoves = move(field, this.fields)
+                    this.firstClick = field
+                }
             } 
             else if (this.firstClick && !this.lastClick) this.lastClick = field
             if (this.firstClick && this.lastClick) {
                 if (this.allowedMoves.includes(field.id)) {
                     this.fields[this.lastClick.id].figure = this.firstClick.figure
                     this.fields[this.firstClick.id].figure = null
+                    this.turn = !this.turn
+                    this.check = getCheck(this.fields, this.turn)
                 }
                 this.allowedMoves = []
                 this.firstClick = this.lastClick = null
             }
         },
         displayAllowedMoves(field) {
-            return this.allowedMoves.includes(field.id) ? 'chess__field_allowed' : ''
+            let styles = []
+            if (this.allowedMoves.includes(field.id)) styles.push('chess__field_allowed')
+            if (this.check === field.id) styles.push('chess__field_check')
+            return styles
         }
     },
     components: { ChessField }
@@ -114,6 +120,10 @@ export default {
 
     .chess__field_allowed {
         background-color: #16b465 !important;
+    }
+
+    .chess__field_check {
+        background-color: #c00d0d !important;
     }
 
 </style>
